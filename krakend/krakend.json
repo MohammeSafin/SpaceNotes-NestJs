@@ -1,0 +1,311 @@
+{
+    "version": 3,
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "name": "IM Gateway",
+    "port": 8080,
+    "timeout": "3000ms",
+    "cache_ttl": "300s",
+    "output_encoding": "no-op",
+    "endpoints": [
+        {
+            "endpoint": "/auth/login",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/auth/login",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/register",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/auth/register",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/{id}",
+            "method": "PUT",
+            "backend": [
+                {
+                    "url_pattern": "/auth/{id}",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/resetPassword",
+            "method": "PATCH",
+            "backend": [
+                {
+                    "url_pattern": "/auth/resetPassword",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/deleteSelf",
+            "method": "DELETE",
+            "backend": [
+                {
+                    "url_pattern": "/auth/deleteSelf",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/verify",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/auth/verify",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/code",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/auth/code",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth",
+            "method": "GET",
+            "backend": [
+                {
+                    "url_pattern": "/auth",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/auth/{id}/uploadImage",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/auth/{id}/uploadImage",
+                    "host": [
+                        "http://auth-service:3001"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/course/createcourse",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/course/createcourse",
+                    "host": [
+                        "http://course-service:3002"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/course/deletcourse/{id}",
+            "method": "DELETE",
+            "backend": [
+                {
+                    "url_pattern": "/course/deletcourse/{id}",
+                    "host": [
+                        "http://course-service:3002"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/course/updateDescription",
+            "method": "PATCH",
+            "backend": [
+                {
+                    "url_pattern": "/course/updateDescription",
+                    "host": [
+                        "http://course-service:3002"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/course/{id}",
+            "method": "GET",
+            "backend": [
+                {
+                    "url_pattern": "/course/{id}",
+                    "host": [
+                        "http://course-service:3002"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/course/{userId}",
+            "method": "DELETE",
+            "backend": [
+                {
+                    "url_pattern": "/course/{userId}",
+                    "host": [
+                        "http://course-service:3002"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/course/{id}/uploadImage",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/course/{id}/uploadImage",
+                    "host": [
+                        "http://course-service:3002"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/lecture",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/lecture",
+                    "host": [
+                        "http://lecture-service:3004"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/lecture/file",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/lecture/file",
+                    "host": [
+                        "http://lecture-service:3004"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/lecture/{courseid}",
+            "method": "GET",
+            "backend": [
+                {
+                    "url_pattern": "/lecture/{courseid}",
+                    "host": [
+                        "http://lecture-service:3004"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/lecture",
+            "method": "PATCH",
+            "backend": [
+                {
+                    "url_pattern": "/lecture",
+                    "host": [
+                        "http://lecture-service:3004"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/lecture/{id}",
+            "method": "DELETE",
+            "backend": [
+                {
+                    "url_pattern": "/lecture/{id}",
+                    "host": [
+                        "http://lecture-service:3004"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/lecture/course/{CourseId}",
+            "method": "DELETE",
+            "backend": [
+                {
+                    "url_pattern": "/lecture/course/{CourseId}",
+                    "host": [
+                        "http://lecture-service:3004"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/quiz/{id}",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/quiz/{id}",
+                    "host": [
+                        "http://quiz-service:3006"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/quiz/{id}",
+            "method": "GET",
+            "backend": [
+                {
+                    "url_pattern": "/quiz/{id}",
+                    "host": [
+                        "http://quiz-service:3006"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/quiz/QuizeDone",
+            "method": "PATCH",
+            "backend": [
+                {
+                    "url_pattern": "/quiz/QuizeDone",
+                    "host": [
+                        "http://quiz-service:3006"
+                    ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/quiz/{id}",
+            "method": "DELETE",
+            "backend": [
+                {
+                    "url_pattern": "/quiz/{id}",
+                    "host": [
+                        "http://quiz-service:3006"
+                    ]
+                }
+            ]
+        }
+    ]
+}

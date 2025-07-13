@@ -1,0 +1,1 @@
+{"version":3,"file":"create-quiz.dto.js","sourceRoot":"","sources":["../../../../src/entities/dto/create-quiz.dto.ts"],"names":[],"mappings":";;;AAAA,MAAa,eAAe;IAC1B,IAAI,CAAS;CACd;AAFD,0CAEC;AAED,MAAa,iBAAiB;IAC5B,KAAK,CAAS;IACd,MAAM,CAAS;IACf,OAAO,CAAoB;CAC5B;AAJD,8CAIC;AAED,MAAa,aAAa;IACxB,SAAS,CAAS;IAClB,MAAM,CAAW;IACjB,SAAS,CAAsB;CAChC;AAJD,sCAIC"}

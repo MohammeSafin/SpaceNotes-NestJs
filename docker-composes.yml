@@ -1,0 +1,178 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: hama
+      RABBITMQ_DEFAULT_PASS: hamahama
+
+
+  # postgres-auth:
+  #   image: postgres:13
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_auth_data:/var/lib/postgresql/data
+
+  # postgres-course:
+  #   image: postgres:13
+  #   env_file:
+  #     - ./env/postgres-course.env
+  #   ports:
+  #     - "5433:5432"
+  #   volumes:
+  #     - postgres_course_data:/var/lib/postgresql/data
+
+  # postgres-notes:
+  #   image: postgres:13
+  #   env_file:
+  #     - ./env/postgres-notes.env
+  #   ports:
+  #     - "5434:5432"
+  #   volumes:
+  #     - postgres_notes_data:/var/lib/postgresql/data
+
+  postgres-quiz:
+    image: postgres:13
+    env_file:
+      - ./quiz/.env
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_quiz_data:/var/lib/postgresql/data
+
+  # postgres-summarizer:
+  #   image: postgres:13
+  #   env_file:
+  #     - ./env/postgres-summarizer.env
+  #   ports:
+  #     - "5436:5432"
+  #   volumes:
+  #     - postgres_summarizer_data:/var/lib/postgresql/data
+
+  # postgres-user:
+  #   image: postgres:13
+  #   env_file:
+  #     - ./env/postgres-user.env
+  #   ports:
+  #     - "5437:5432"
+  #   volumes:
+  #     - postgres_user_data:/var/lib/postgresql/data
+
+  # mongodb:
+  #   image: mongo:latest
+  #   env_file:
+  #     - ./env/mongodb.env
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb_data:/data/db
+
+  # krakend:
+  #   build:
+  #     context: ./krakend
+  #   container_name: krakend
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - auth-service
+  #     - course-service
+  #     - notes-service
+  #     - quiz-service
+  #     - summarizer-service
+  #     - user-service
+  #     - query-service
+
+  # auth-service:
+  #   build:
+  #     context: ./auth
+  #   container_name: auth-service
+  #   ports:
+  #     - "3001:3001"
+  #   env_file:
+  #     - ./auth/.env
+  #   depends_on:
+  #     - postgres-auth
+  #   volumes:
+  #     - ./auth:/var/lib/auth-service
+
+  # course-service:
+  #   build:
+  #     context: ./course
+  #   container_name: course-service
+  #   ports:
+  #     - "3002:3002"
+  #   env_file:
+  #     - ./env/course-service.env
+  #   depends_on:
+  #     - postgres-course
+
+  # notes-service:
+  #   build:
+  #     context: ./notes
+  #   container_name: notes-service
+  #   ports:
+  #     - "3003:3003"
+  #   env_file:
+  #     - ./env/notes-service.env
+  #   depends_on:
+  #     - postgres-notes
+
+  quiz-service:
+    build:
+      context: ./quiz
+    container_name: quiz-service
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./quiz/.env
+    depends_on:
+      - postgres-quiz
+      - rabbitmq
+
+  # summarizer-service:
+  #   build:
+  #     context: ./summarizer
+  #   container_name: summarizer-service
+  #   ports:
+  #     - "3005:3005"
+  #   env_file:
+  #     - ./env/summarizer-service.env
+  #   depends_on:
+  #     - postgres-summarizer
+
+  # user-service:
+  #   build:
+  #     context: ./user
+  #   container_name: user-service
+  #   ports:
+  #     - "3006:3006"
+  #   env_file:
+  #     - ./env/user-service.env
+  #   depends_on:
+  #     - postgres-user
+
+  # query-service:
+  #   build:
+  #     context: ./query-service
+  #   container_name: query-service
+  #   ports:
+  #     - "3007:3007"
+  #   env_file:
+  #     - ./env/query-service.env
+  #   depends_on:
+  #     - mongodb
+
+volumes:
+  # postgres_auth_data:
+  # postgres_course_data:
+  # postgres_notes_data:
+  postgres_quiz_data:
+  # postgres_summarizer_data:
+  # postgres_user_data:
+  # mongodb_data:

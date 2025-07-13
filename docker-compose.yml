@@ -1,0 +1,142 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: hama
+      RABBITMQ_DEFAULT_PASS: hamahama
+
+  postgres-auth-new:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgresauth
+      POSTGRES_PASSWORD: 229rewhur@***@fkjsadfjd
+      POSTGRES_DB: authdb
+    ports:
+      - "5437:5432"
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+
+  postgres-course:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 229rewhur@***@fkjsadfjd
+      POSTGRES_DB: course
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_course_data:/var/lib/postgresql/data
+  postgres-lecture:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 229rewhur@***@fkjsadfjd
+      POSTGRES_DB: lecture
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_lecture_data:/var/lib/postgresql/data
+    depends_on:
+      - rabbitmq
+
+  postgres-summarizer:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 229rewhur@***@fkjsadfjd
+      POSTGRES_DB: summarizer
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_summarizer_data:/var/lib/postgresql/data
+
+  postgres-quiz:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 229rewhur@***@fkjsadfjd
+      POSTGRES_DB: quiz
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_quiz_data:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: ./auth
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./auth/.env
+    volumes:
+      - ./auth:/var/lib/auth-service
+
+  course-service:
+    build:
+      context: ./course
+    container_name: course-service
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./course/.env
+    volumes:
+      - ./course:/var/lib/course-service
+  lecture-service:
+    build:
+      context: ./lecture
+    container_name: lecture-service
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./lecture/.env
+    volumes:
+      - ./lecture:/var/lib/lecture-service
+    # command: bash -c "apt-get update && apt-get install -y ffmpeg && npm run start:dev"
+
+  summarizer-service:
+    build:
+      context: ./summarizer
+    container_name: summarizer-service
+    ports:
+      - "3005:3005"
+    env_file:
+      - ./summarizer/.env
+    volumes:
+      - ./summarizer:/var/lib/summarizer-service
+  quiz-service:
+    build:
+      context: ./quiz
+    container_name: quiz-service
+    ports:
+      - "3006:3006"
+    env_file:
+      - ./quiz/.env
+    volumes:
+      - ./quiz:/var/lib/quiz-service
+
+  krakend:
+    build:
+      context: ./krakend
+    container_name: krakend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service
+      - course-service
+      - lecture-service
+      - summarizer-service
+      - quiz-service
+
+volumes:
+  postgres_auth_data:
+  postgres_course_data:
+  postgres_lecture_data:
+  postgres_summarizer_data:
+  postgres_quiz_data:
